@@ -1,0 +1,26 @@
+version: '3.3'
+services:
+  mysql:
+    image: mysql
+    restart: always
+    hostname: mysql
+    volumes:
+      - ./db/seed.sql:/docker-entrypoint-initdb.d/seed.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: dev
+  web:
+    image: keymetrics/pm2:latest-alpine
+    links:
+      - mysql
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    working_dir: /app
+    environment:
+      MYSQL_HOSTNAME: mysql
+      MYSQL_USERNAME: root
+      MYSQL_PASSWORD: password
+      MYSQL_DBNAME: dev
+    command: ["pm2-runtime", "start", "pm2.json"]

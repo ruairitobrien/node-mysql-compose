@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./node_modules/.bin/pm2 start pm2.json",
+    "poststart": "node ./node_modules/.bin/pm2 logs"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
@@ -11,6 +12,8 @@
     "ejs": "~2.5.7",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
-    "morgan": "~1.9.0"
+    "morgan": "~1.9.0",
+    "mysql": "^2.15.0",
+    "pm2": "^2.10.2"
   }
 }

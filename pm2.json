@@ -1,0 +1,14 @@
+{
+    "apps" : [{
+      "name"        : "node-mysql-compose",
+      "script"      : "./bin/www",
+      "watch"       : ["routes", "views", "./app.js"],
+      "ignore_watch": ["node_modules", "public"],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "env_production" : {
+         "NODE_ENV": "production"
+      }
+    }]
+  }

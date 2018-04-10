@@ -3,9 +3,36 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mysql = require("mysql");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+
+const env = process.env;
+let conf = {
+  host: env.MYSQL_HOSTNAME,
+  username: env.MYSQL_USERNAME,
+  password: env.MYSQL_PASSWORD,
+  db: env.MYSQL_DBNAME
+};
+
+var con = mysql.createConnection({
+  host: conf.host,
+  user: conf.username,
+  password: conf.password,
+  database: conf.db
+});
+
+con.connect(function(err) {
+  if (err) {
+    if (err.code === "PROTOCOL_CONNECTION_LOST") {
+      con();
+    } else {
+      console.error("connecting error", err);
+      return;
+    }
+  } else console.log("connecting success");
+});
 
 var app = express();
 
