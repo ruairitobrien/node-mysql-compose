@@ -11,7 +11,10 @@ services:
       MYSQL_DATABASE: dev
   web:
     image: keymetrics/pm2:latest-alpine
+    restart: always
     links:
+      - mysql
+    depends_on: 
       - mysql
     ports:
       - "3000:3000"
